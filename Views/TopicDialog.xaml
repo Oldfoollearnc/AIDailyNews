@@ -1,0 +1,58 @@
+<UserControl x:Class="AIDailyNews.Views.TopicDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="480"
+             MinWidth="400" MinHeight="300">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="管理关注主题" FontSize="20"
+                   FontWeight="Bold" Margin="0,0,0,12" />
+
+        <DockPanel Grid.Row="1">
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,8,0,0">
+                <TextBox materialDesign:TextFieldAssist.HasClearButton="True"
+                         Text="{Binding NewTopicName, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="输入主题名称，如 GPT-5、Sora、AI Agent..."
+                         Width="260" VerticalAlignment="Center" />
+                <Button Command="{Binding AddTopicCommand}"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Margin="8,0,0,0"
+                        Content="添加" />
+                <Button Command="{Binding DeleteTopicCommand}"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Margin="8,0,0,0"
+                        Foreground="Red"
+                        Content="删除选中" />
+            </StackPanel>
+
+            <ListBox ItemsSource="{Binding Topics}"
+                     SelectedItem="{Binding SelectedTopic}"
+                     DisplayMemberPath="Name"
+                     BorderThickness="0" />
+        </DockPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <TextBlock Text="提示：系统会自动在所有 RSS 源中匹配主题关键词" 
+                       FontSize="11" Foreground="{DynamicResource MaterialDesignBodyLight}"
+                       VerticalAlignment="Center" Margin="0,0,12,0" />
+            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    CommandParameter="false"
+                    Content="取消"
+                    Margin="0,0,8,0" />
+            <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    CommandParameter="true"
+                    Content="保存" />
+        </StackPanel>
+    </Grid>
+</UserControl>
